@@ -123,6 +123,14 @@ transform:translateY(0);
 
 .logo{
 
+display:flex;
+
+justify-content:center;
+
+margin-bottom:20px;
+
+}
+
 font-size:90px;
 
 margin-bottom:15px;
@@ -131,15 +139,6 @@ animation:robot 3s infinite ease-in-out;
 
 }
 
-@keyframes robot{
-
-0%{transform:translateY(0px);}
-
-50%{transform:translateY(-10px);}
-
-100%{transform:translateY(0px);}
-
-}
 
 h1{
 
@@ -294,6 +293,40 @@ font-size:70px;
 h1{
 
 font-size:28px;
+
+}
+
+}
+
+#boot{
+
+width:180px;
+
+height:auto;
+
+animation:flotar 3s ease-in-out infinite;
+
+filter:drop-shadow(0 10px 20px rgba(0,0,0,.25));
+
+}
+
+@keyframes flotar{
+
+0%{
+
+transform:translateY(0px);
+
+}
+
+50%{
+
+transform:translateY(-12px);
+
+}
+
+100%{
+
+transform:translateY(0px);
 
 }
 
