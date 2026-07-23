@@ -1,48 +1,45 @@
-document.addEventListener("DOMContentLoaded", () => {
-    const empleadoInput = document.getElementById("empleado");
-    const btnConsultar = document.getElementById("btnConsultar");
+document.addEventListener("DOMContentLoaded", function () {
+    const inputEmpleado = document.getElementById("empleado");
+    const botonConsultar = document.getElementById("btnConsultar");
     const resultado = document.getElementById("resultado");
 
-    // Permite escribir únicamente números.
-    empleadoInput.addEventListener("input", () => {
-        empleadoInput.value = empleadoInput.value.replace(/\D/g, "");
+    if (!inputEmpleado || !botonConsultar || !resultado) {
+        console.error("No se encontraron los elementos de la aplicación.");
+        return;
+    }
+
+    inputEmpleado.addEventListener("input", function () {
+        inputEmpleado.value = inputEmpleado.value.replace(/\D/g, "");
     });
 
-    // Permite consultar presionando Enter.
-    empleadoInput.addEventListener("keydown", (event) => {
-        if (event.key === "Enter") {
+    inputEmpleado.addEventListener("keydown", function (evento) {
+        if (evento.key === "Enter") {
             consultarEmpleado();
         }
     });
 
-    btnConsultar.addEventListener("click", consultarEmpleado);
+    botonConsultar.addEventListener("click", consultarEmpleado);
 
     function consultarEmpleado() {
-        const numeroEmpleado = empleadoInput.value.trim();
+        const numeroEmpleado = inputEmpleado.value.trim();
 
         if (numeroEmpleado === "") {
-            mostrarError("Ingresa tu número de empleado.");
-            empleadoInput.focus();
+            mostrarValidacion("Ingresa tu número de empleado.");
+            inputEmpleado.focus();
             return;
         }
 
         if (numeroEmpleado.length < 4) {
-            mostrarError("Verifica el número de empleado.");
-            empleadoInput.focus();
+            mostrarValidacion("Verifica el número de empleado.");
+            inputEmpleado.focus();
             return;
         }
 
         mostrarBusqueda();
 
-        // Búsqueda simulada para probar la aplicación.
-        setTimeout(() => {
+        setTimeout(function () {
             if (numeroEmpleado === "123456") {
-                mostrarResultado({
-                    nombre: "Participante de prueba",
-                    equipo: "Fiber Force",
-                    mesa: "5",
-                    hora: obtenerHoraActual()
-                });
+                mostrarExito();
             } else {
                 mostrarNoEncontrado();
             }
@@ -50,14 +47,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function mostrarBusqueda() {
-        btnConsultar.disabled = true;
-        btnConsultar.textContent = "BUSCANDO...";
+        botonConsultar.disabled = true;
+        botonConsultar.textContent = "BUSCANDO...";
 
         resultado.innerHTML = `
             <div class="estado busqueda">
                 <img
-                    src="assets/images/boot-evolu.png"
-                    alt="BOOT EVOLU buscando"
+                    src="./assets/images/boot-evolu.png"
+                    alt="BOOT EVOLU"
                     class="boot-estado"
                 >
 
@@ -71,31 +68,31 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     }
 
-    function mostrarResultado(datos) {
-        btnConsultar.disabled = false;
-        btnConsultar.textContent = "CONSULTAR";
+    function mostrarExito() {
+        botonConsultar.disabled = false;
+        botonConsultar.textContent = "CONSULTAR";
 
         resultado.innerHTML = `
             <div class="estado resultado-exitoso">
                 <div class="icono-estado">✓</div>
 
                 <h3>¡Bienvenido!</h3>
-                <h4>${datos.nombre}</h4>
+                <h4>Participante de prueba</h4>
 
                 <div class="datos-competidor">
                     <div class="dato">
                         <span>🏆 Equipo</span>
-                        <strong>${datos.equipo}</strong>
+                        <strong>Fiber Force</strong>
                     </div>
 
                     <div class="dato">
                         <span>📍 Mesa</span>
-                        <strong>${datos.mesa}</strong>
+                        <strong>5</strong>
                     </div>
 
                     <div class="dato">
                         <span>✅ Registro</span>
-                        <strong>${datos.hora}</strong>
+                        <strong>${obtenerHora()}</strong>
                     </div>
                 </div>
 
@@ -104,11 +101,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 </p>
             </div>
         `;
+
+        resultado.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+        });
     }
 
     function mostrarNoEncontrado() {
-        btnConsultar.disabled = false;
-        btnConsultar.textContent = "CONSULTAR";
+        botonConsultar.disabled = false;
+        botonConsultar.textContent = "CONSULTAR";
 
         resultado.innerHTML = `
             <div class="estado resultado-error">
@@ -117,14 +119,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 <h3>Número no encontrado</h3>
 
                 <p>
-                    Verifica tu número de empleado o solicita asistencia
+                    Verifica el número o solicita asistencia
                     al comité organizador.
                 </p>
             </div>
         `;
+
+        resultado.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest"
+        });
     }
 
-    function mostrarError(mensaje) {
+    function mostrarValidacion(mensaje) {
         resultado.innerHTML = `
             <div class="mensaje-validacion">
                 ${mensaje}
@@ -132,7 +139,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
     }
 
-    function obtenerHoraActual() {
+    function obtenerHora() {
         return new Intl.DateTimeFormat("es-DO", {
             hour: "numeric",
             minute: "2-digit",
