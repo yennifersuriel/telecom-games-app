@@ -1,1 +1,298 @@
-/* Telecom Games */
+
+/* ==========================================
+   TELECOM GAMES
+   ONCE EVOLUCIONA
+========================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+}
+
+body{
+
+    background:linear-gradient(135deg,#123B2C,#1D4E38,#245E45);
+
+    min-height:100vh;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    overflow:hidden;
+
+}
+
+/* Fondo tecnológico */
+
+.background{
+
+    position:fixed;
+
+    inset:0;
+
+    background-image:
+
+    radial-gradient(circle at 20% 20%,rgba(255,255,255,.08) 2px,transparent 2px),
+
+    radial-gradient(circle at 80% 40%,rgba(255,255,255,.05) 2px,transparent 2px),
+
+    radial-gradient(circle at 40% 80%,rgba(255,255,255,.07) 2px,transparent 2px);
+
+    background-size:180px 180px;
+
+    animation:fondo 20s linear infinite;
+
+}
+
+@keyframes fondo{
+
+from{
+
+background-position:0 0;
+
+}
+
+to{
+
+background-position:180px 180px;
+
+}
+
+}
+
+.container{
+
+width:100%;
+
+display:flex;
+
+justify-content:center;
+
+padding:30px;
+
+position:relative;
+
+z-index:2;
+
+}
+
+.card{
+
+width:430px;
+
+background:white;
+
+border-radius:28px;
+
+padding:45px;
+
+box-shadow:0 30px 80px rgba(0,0,0,.30);
+
+text-align:center;
+
+animation:entrada .8s ease;
+
+}
+
+@keyframes entrada{
+
+from{
+
+opacity:0;
+
+transform:translateY(40px);
+
+}
+
+to{
+
+opacity:1;
+
+transform:translateY(0);
+
+}
+
+}
+
+.logo{
+
+font-size:90px;
+
+margin-bottom:15px;
+
+animation:robot 3s infinite ease-in-out;
+
+}
+
+@keyframes robot{
+
+0%{transform:translateY(0px);}
+
+50%{transform:translateY(-10px);}
+
+100%{transform:translateY(0px);}
+
+}
+
+h1{
+
+color:#1D4E38;
+
+font-size:34px;
+
+font-weight:800;
+
+margin-bottom:8px;
+
+}
+
+h2{
+
+color:#D62828;
+
+font-size:18px;
+
+font-weight:700;
+
+margin-bottom:18px;
+
+letter-spacing:2px;
+
+}
+
+.subtitle{
+
+color:#555;
+
+margin-bottom:35px;
+
+font-size:15px;
+
+}
+
+label{
+
+display:block;
+
+text-align:left;
+
+font-weight:700;
+
+margin-bottom:10px;
+
+color:#333;
+
+}
+
+input{
+
+width:100%;
+
+padding:16px;
+
+border-radius:12px;
+
+border:2px solid #d8d8d8;
+
+font-size:20px;
+
+transition:.3s;
+
+margin-bottom:25px;
+
+}
+
+input:focus{
+
+outline:none;
+
+border-color:#1D4E38;
+
+box-shadow:0 0 12px rgba(29,78,56,.25);
+
+}
+
+button{
+
+width:100%;
+
+padding:17px;
+
+border:none;
+
+border-radius:14px;
+
+background:#D62828;
+
+color:white;
+
+font-size:18px;
+
+font-weight:bold;
+
+cursor:pointer;
+
+transition:.25s;
+
+}
+
+button:hover{
+
+transform:scale(1.03);
+
+background:#b71f1f;
+
+}
+
+button:active{
+
+transform:scale(.98);
+
+}
+
+#resultado{
+
+margin-top:30px;
+
+min-height:80px;
+
+}
+
+footer{
+
+margin-top:35px;
+
+font-size:13px;
+
+color:#777;
+
+}
+
+@media(max-width:600px){
+
+.card{
+
+width:95%;
+
+padding:30px;
+
+}
+
+.logo{
+
+font-size:70px;
+
+}
+
+h1{
+
+font-size:28px;
+
+}
+
+}
