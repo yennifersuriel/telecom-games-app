@@ -13,20 +13,15 @@ body{
     font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
 }
 
-body{
-
-    background:linear-gradient(135deg,#123B2C,#1D4E38,#245E45);
-
-    min-height:100vh;
-
-    display:flex;
-
-    justify-content:center;
-
-    align-items:center;
-
-    overflow:hidden;
-
+body {
+    background: linear-gradient(135deg, #081712, #123b2c, #1d4e38);
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow-x: hidden;
+    overflow-y: auto;
+    padding: 24px 0;
 }
 
 /* Fondo tecnológico */
@@ -36,6 +31,8 @@ body{
     position:fixed;
 
     inset:0;
+    
+    pointer-events: none;
 
     background-image:
 
