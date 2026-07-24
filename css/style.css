@@ -14,7 +14,10 @@ body{
 }
 
 body {
-    background: linear-gradient(135deg, #081712, #123b2c, #1d4e38);
+    background:
+        radial-gradient(circle at top left, rgba(0, 255, 170, 0.12), transparent 28%),
+        radial-gradient(circle at top right, rgba(255, 190, 60, 0.12), transparent 24%),
+        linear-gradient(135deg, #071410 0%, #0d241b 38%, #123b2c 68%, #1d4e38 100%);
     min-height: 100dvh;
     display: flex;
     justify-content: center;
@@ -26,26 +29,24 @@ body {
 
 /* Fondo tecnológico */
 
-.background{
-
-    position:fixed;
-
-    inset:0;
-    
+.background {
+    position: fixed;
+    inset: 0;
     pointer-events: none;
-
     background-image:
-
-    radial-gradient(circle at 20% 20%,rgba(255,255,255,.08) 2px,transparent 2px),
-
-    radial-gradient(circle at 80% 40%,rgba(255,255,255,.05) 2px,transparent 2px),
-
-    radial-gradient(circle at 40% 80%,rgba(255,255,255,.07) 2px,transparent 2px);
-
-    background-size:180px 180px;
-
-    animation:fondo 20s linear infinite;
-
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px),
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.10) 2px, transparent 2px),
+        radial-gradient(circle at 80% 35%, rgba(255,255,255,0.08) 2px, transparent 2px),
+        radial-gradient(circle at 40% 75%, rgba(255,255,255,0.08) 2px, transparent 2px);
+    background-size:
+        36px 36px,
+        36px 36px,
+        180px 180px,
+        220px 220px,
+        200px 200px;
+    opacity: 0.65;
+    animation: fondo 22s linear infinite;
 }
 
 @keyframes fondo{
@@ -80,24 +81,20 @@ z-index:2;
 
 }
 
-.card{
-
-width:430px;
-
-background:white;
-
-border-radius:28px;
-
-padding:45px;
-
-box-shadow:0 30px 80px rgba(0,0,0,.30);
-
-text-align:center;
-
-animation:entrada .8s ease;
-
+.card {
+    width: 430px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 28px;
+    padding: 42px;
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.30),
+        0 0 0 1px rgba(255,255,255,0.08) inset;
+    text-align: center;
+    animation: entrada .8s ease;
 }
-
 @keyframes entrada{
 
 from{
@@ -187,72 +184,43 @@ color:#333;
 
 }
 
-input{
-
-width:100%;
-
-padding:16px;
-
-border-radius:12px;
-
-border:2px solid #d8d8d8;
-
-font-size:20px;
-
-transition:.3s;
-
-margin-bottom:25px;
-
+input {
+    width: 100%;
+    padding: 16px;
+    border-radius: 14px;
+    border: 2px solid #d8d8d8;
+    background: rgba(255,255,255,0.96);
+    font-size: 20px;
+    transition: .3s;
+    margin-bottom: 25px;
 }
-
-input:focus{
-
-outline:none;
-
-border-color:#1D4E38;
-
-box-shadow:0 0 12px rgba(29,78,56,.25);
-
+input:focus {
+    outline: none;
+    border-color: #1d4e38;
+    box-shadow: 0 0 0 4px rgba(29,78,56,.12);
 }
-
-button{
-
-width:100%;
-
-padding:17px;
-
-border:none;
-
-border-radius:14px;
-
-background:#D62828;
-
-color:white;
-
-font-size:18px;
-
-font-weight:bold;
-
-cursor:pointer;
-
-transition:.25s;
-
+button {
+    width: 100%;
+    padding: 17px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #d62828 0%, #f05a28 100%);
+    color: white;
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: .25s ease;
+    box-shadow: 0 12px 24px rgba(214, 40, 40, 0.30);
 }
-
-button:hover{
-
-transform:scale(1.03);
-
-background:#b71f1f;
-
+button:hover {
+    transform: translateY(-2px) scale(1.02);
+    background: linear-gradient(135deg, #c32020 0%, #e94d1a 100%);
+    box-shadow: 0 16px 28px rgba(214, 40, 40, 0.35);
 }
-
-button:active{
-
-transform:scale(.98);
-
+button:active {
+    transform: scale(.98);
 }
-
 #resultado{
 
 margin-top:30px;
