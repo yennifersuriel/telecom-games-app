@@ -134,6 +134,9 @@ document.addEventListener("DOMContentLoaded", function () {
             behavior: "smooth",
             block: "nearest"
         });
+        setTimeout(function () {
+    reiniciarFormulario();
+}, 10000);
     }
 
     function mostrarNoEncontrado(mensaje) {
@@ -181,4 +184,16 @@ document.addEventListener("DOMContentLoaded", function () {
         elemento.textContent = String(valor ?? "");
         return elemento.innerHTML;
     }
+    function reiniciarFormulario() {
+    inputEmpleado.value = "";
+    resultado.innerHTML = "";
+    botonConsultar.disabled = false;
+    botonConsultar.textContent = "CONSULTAR";
+    inputEmpleado.focus();
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
 });
