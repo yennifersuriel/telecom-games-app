@@ -60,13 +60,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
             const datos = await respuesta.json();
 
-            if (datos.encontrado === true) {
-                mostrarExito(datos);
-            } else {
-                mostrarNoEncontrado(
-                    datos.mensaje || "Número de empleado no encontrado."
-                );
-            }
+           if (datos.encontrado === true && datos.duplicado === true) {
+    mostrarDuplicado(datos);
+} else if (datos.encontrado === true) {
+    mostrarExito(datos);
+} else {
+    mostrarNoEncontrado(
+        datos.mensaje || "Número de empleado no encontrado."
+    );
+}
         } catch (error) {
             console.error("Error de conexión:", error);
 
@@ -139,6 +141,50 @@ document.addEventListener("DOMContentLoaded", function () {
 }, 10000);
     }
 
+function mostrarDuplicado(datos) {
+    botonConsultar.disabled = false;
+    botonConsultar.textContent = "CONSULTAR";
+
+    resultado.innerHTML = `
+        <div class="estado resultado-duplicado">
+            <div class="icono-estado icono-duplicado">↻</div>
+
+            <h3>Participante ya registrado</h3>
+            <h4>${escaparHtml(datos.nombre)}</h4>
+
+            <div class="datos-competidor">
+                <div class="dato">
+                    <span>🏆 Equipo</span>
+                    <strong>${escaparHtml(datos.equipo)}</strong>
+                </div>
+
+                <div class="dato">
+                    <span>📍 Mesa</span>
+                    <strong>${escaparHtml(datos.mesa)}</strong>
+                </div>
+
+                <div class="dato">
+                    <span>🕒 Registro anterior</span>
+                    <strong>${escaparHtml(datos.hora)}</strong>
+                </div>
+            </div>
+
+            <p class="mensaje-final">
+                Este participante ya había completado su registro.
+            </p>
+        </div>
+    `;
+
+    resultado.scrollIntoView({
+        behavior: "smooth",
+        block: "nearest"
+    });
+
+    setTimeout(function () {
+        reiniciarFormulario();
+    }, 10000);
+}
+    
     function mostrarNoEncontrado(mensaje) {
         botonConsultar.disabled = false;
         botonConsultar.textContent = "CONSULTAR";
