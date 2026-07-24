@@ -490,3 +490,11 @@ button:disabled {
     opacity: 0.7;
     transform: none;
 }
+.resultado-duplicado {
+    background: #fff8e6;
+    border: 1px solid #f2cf78;
+}
+
+.icono-duplicado {
+    background: #d89b16;
+}
