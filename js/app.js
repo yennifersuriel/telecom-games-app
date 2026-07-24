@@ -1,4 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
+    const URL_APPS_SCRIPT =
+        "https://script.google.com/macros/s/AKfycbygHEVZ0d-4MkqRXMNoIhMvpdESWmZpia_Pc2nefHbqgrFp6BSZUjtC6FxDogkM7be8Vw/exec";
+
     const inputEmpleado = document.getElementById("empleado");
     const botonConsultar = document.getElementById("btnConsultar");
     const resultado = document.getElementById("resultado");
@@ -20,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     botonConsultar.addEventListener("click", consultarEmpleado);
 
-    function consultarEmpleado() {
+    async function consultarEmpleado() {
         const numeroEmpleado = inputEmpleado.value.trim();
 
         if (numeroEmpleado === "") {
@@ -37,13 +40,38 @@ document.addEventListener("DOMContentLoaded", function () {
 
         mostrarBusqueda();
 
-        setTimeout(function () {
-            if (numeroEmpleado === "123456") {
-                mostrarExito();
-            } else {
-                mostrarNoEncontrado();
+        try {
+            const respuesta = await fetch(URL_APPS_SCRIPT, {
+                method: "POST",
+                redirect: "follow",
+                headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                },
+                body: JSON.stringify({
+                    idEmpleado: numeroEmpleado
+                })
+            });
+
+            if (!respuesta.ok) {
+                throw new Error(
+                    "El servicio respondió con estado " + respuesta.status
+                );
             }
-        }, 1800);
+
+            const datos = await respuesta.json();
+
+            if (datos.encontrado === true) {
+                mostrarExito(datos);
+            } else {
+                mostrarNoEncontrado(
+                    datos.mensaje || "Número de empleado no encontrado."
+                );
+            }
+        } catch (error) {
+            console.error("Error de conexión:", error);
+
+            mostrarErrorConexion();
+        }
     }
 
     function mostrarBusqueda() {
@@ -54,7 +82,7 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="estado busqueda">
                 <img
                     src="./assets/images/boot-evolu.png"
-                    alt="BOOT EVOLU"
+                    alt="BOOT EVOLU buscando"
                     class="boot-estado"
                 >
 
@@ -68,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
     }
 
-    function mostrarExito() {
+    function mostrarExito(datos) {
         botonConsultar.disabled = false;
         botonConsultar.textContent = "CONSULTAR";
 
@@ -76,23 +104,23 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="estado resultado-exitoso">
                 <div class="icono-estado">✓</div>
 
-                <h3>¡Bienvenido!</h3>
-                <h4>Participante de prueba</h4>
+                <h3>¡Registro exitoso!</h3>
+                <h4>${escaparHtml(datos.nombre)}</h4>
 
                 <div class="datos-competidor">
                     <div class="dato">
                         <span>🏆 Equipo</span>
-                        <strong>Fiber Force</strong>
+                        <strong>${escaparHtml(datos.equipo)}</strong>
                     </div>
 
                     <div class="dato">
                         <span>📍 Mesa</span>
-                        <strong>5</strong>
+                        <strong>${escaparHtml(datos.mesa)}</strong>
                     </div>
 
                     <div class="dato">
-                        <span>✅ Registro</span>
-                        <strong>${obtenerHora()}</strong>
+                        <span>✅ Hora</span>
+                        <strong>${escaparHtml(datos.hora)}</strong>
                     </div>
                 </div>
 
@@ -108,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function mostrarNoEncontrado() {
+    function mostrarNoEncontrado(mensaje) {
         botonConsultar.disabled = false;
         botonConsultar.textContent = "CONSULTAR";
 
@@ -118,32 +146,39 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 <h3>Número no encontrado</h3>
 
+                <p>${escaparHtml(mensaje)}</p>
+            </div>
+        `;
+    }
+
+    function mostrarErrorConexion() {
+        botonConsultar.disabled = false;
+        botonConsultar.textContent = "CONSULTAR";
+
+        resultado.innerHTML = `
+            <div class="estado resultado-error">
+                <div class="icono-estado">!</div>
+
+                <h3>No se pudo conectar</h3>
+
                 <p>
-                    Verifica el número o solicita asistencia
-                    al comité organizador.
+                    Revisa tu conexión a internet e inténtalo nuevamente.
                 </p>
             </div>
         `;
-
-        resultado.scrollIntoView({
-            behavior: "smooth",
-            block: "nearest"
-        });
     }
 
     function mostrarValidacion(mensaje) {
         resultado.innerHTML = `
             <div class="mensaje-validacion">
-                ${mensaje}
+                ${escaparHtml(mensaje)}
             </div>
         `;
     }
 
-    function obtenerHora() {
-        return new Intl.DateTimeFormat("es-DO", {
-            hour: "numeric",
-            minute: "2-digit",
-            hour12: true
-        }).format(new Date());
+    function escaparHtml(valor) {
+        const elemento = document.createElement("div");
+        elemento.textContent = String(valor ?? "");
+        return elemento.innerHTML;
     }
 });
